@@ -1,0 +1,37 @@
+{
+  "name": "sg-loop-lab",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Explorable interview prep for Singapore's 2026 senior software engineering loops.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "typecheck": "tsc -b",
+    "lint": "oxlint",
+    "test": "vitest run",
+    "preview": "vite preview",
+    "check": "npm run typecheck && npm run lint && npm run test && vite build"
+  },
+  "dependencies": {
+    "@fontsource-variable/fraunces": "^5.3.0",
+    "@fontsource-variable/ibm-plex-sans": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "lucide-react": "^1.79.0",
+    "motion": "^14.14.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "oxlint": "^1.90.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "~7.0.2",
+    "vite": "^8.3.6",
+    "vitest": "^4.1.12"
+  }
+}

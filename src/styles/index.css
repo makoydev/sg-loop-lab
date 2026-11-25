@@ -1,0 +1,472 @@
+@import 'tailwindcss';
+@import '@fontsource-variable/fraunces/full.css';
+@import '@fontsource-variable/fraunces/full-italic.css';
+@import '@fontsource-variable/ibm-plex-sans/wght.css';
+@import '@fontsource/ibm-plex-mono/400.css';
+@import '@fontsource/ibm-plex-mono/500.css';
+@import '@fontsource/ibm-plex-mono/600.css';
+
+/*
+ * Loop Lab design tokens.
+ *
+ * Two surfaces carry the whole idea of the app:
+ *   paper — warm, light, where you think and struggle;
+ *   film  — dark x-ray film, where you see inside the machine.
+ * Five "line" colours identify the five labs, the way a transit map does.
+ */
+@theme {
+  --font-display: 'Fraunces Variable', 'Iowan Old Style', Georgia, serif;
+  --font-sans:
+    'IBM Plex Sans Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+
+  /* paper */
+  --color-paper: #f4f0e6;
+  --color-paper-2: #ece6d8;
+  --color-paper-3: #e2dccb;
+  --color-card: #fbf9f3;
+  --color-ink: #1a1a1f;
+  --color-ink-2: #46464e;
+  --color-ink-3: #6a6970;
+  --color-rule: #d6d0c0;
+  --color-rule-2: #c2bba8;
+
+  /* lines (one per lab) */
+  --color-line-red: #d23f2b;
+  --color-line-green: #178a5c;
+  --color-line-purple: #7650c0;
+  --color-line-orange: #c97a10;
+  --color-line-blue: #1c6bc4;
+
+  /* semantic, on paper */
+  --color-ok: #17794f;
+  --color-warn: #9a6207;
+  --color-bad: #c2362b;
+  --color-ok-wash: #dcefe3;
+  --color-warn-wash: #f6e8c8;
+  --color-bad-wash: #f7dcd6;
+  --color-info-wash: #e2e6f6;
+
+  /* film */
+  --color-film: #0a1019;
+  --color-film-2: #101927;
+  --color-film-3: #182435;
+  --color-film-rule: #24354b;
+  --color-film-text: #dbe7f3;
+  --color-film-muted: #8298ae;
+  --color-trace: #6fe3f2;
+  --color-trace-dim: #2a6b78;
+  --color-f-ok: #5fe0a2;
+  --color-f-warn: #ffc95c;
+  --color-f-bad: #ff6f6b;
+  --color-f-info: #b7a0ff;
+
+  --shadow-card: 0 1px 0 rgba(26, 26, 31, 0.04), 0 8px 24px -12px rgba(26, 26, 31, 0.18);
+  --shadow-film: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 24px 48px -24px rgba(10, 16, 25, 0.55);
+
+  --animate-scan: scan 1.1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-flash: flash 0.7s ease-out both;
+  --animate-pulse-ring: pulse-ring 1.6s ease-out infinite;
+  --animate-march: march 0.9s linear infinite;
+  --animate-rise: rise 0.45s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  --animate-delta: delta 2.8s ease-out both;
+
+  @keyframes scan {
+    0% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+    15% {
+      opacity: 0.9;
+    }
+    100% {
+      transform: translateY(520%);
+      opacity: 0;
+    }
+  }
+  @keyframes flash {
+    0% {
+      background-color: color-mix(in oklab, currentColor 28%, transparent);
+    }
+    100% {
+      background-color: transparent;
+    }
+  }
+  @keyframes pulse-ring {
+    0% {
+      box-shadow: 0 0 0 0 color-mix(in oklab, currentColor 55%, transparent);
+    }
+    100% {
+      box-shadow: 0 0 0 10px color-mix(in oklab, currentColor 0%, transparent);
+    }
+  }
+  @keyframes march {
+    to {
+      stroke-dashoffset: -16;
+    }
+  }
+  @keyframes delta {
+    0% {
+      opacity: 0;
+      transform: translateY(4px);
+    }
+    12% {
+      opacity: 1;
+      transform: none;
+    }
+    72% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* `--line` is set per lab on a wrapper; `inline` makes utilities such as
+   `bg-line` / `text-line` / `border-line` read it at the point of use. */
+@theme inline {
+  --color-line: var(--line, #1a1a1f);
+}
+
+@utility kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+@utility num {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'zero' 1;
+}
+
+@utility display {
+  font-family: var(--font-display);
+  font-variation-settings:
+    'SOFT' 50,
+    'WONK' 0;
+  font-optical-sizing: auto;
+  letter-spacing: -0.02em;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    /* lab-notebook dot grid */
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgba(26, 26, 31, 0.075) 1px,
+      transparent 0
+    );
+    background-size: 22px 22px;
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 15.5px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-variation-settings:
+      'SOFT' 50,
+      'WONK' 0;
+    font-optical-sizing: auto;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: color-mix(in oklab, var(--color-trace) 50%, transparent);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ink);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  /* Browsers ring SVG elements on any focus; keep the ring for keyboards only. */
+  svg:focus:not(:focus-visible),
+  svg *:focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  button,
+  [role='button'],
+  summary {
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+  }
+
+  code,
+  kbd,
+  pre {
+    font-family: var(--font-mono);
+  }
+}
+
+@layer components {
+  /* ── film: the x-ray surface ─────────────────────────────────────────── */
+  .film {
+    position: relative;
+    isolation: isolate;
+    color: var(--color-film-text);
+    background-color: var(--color-film);
+    background-image:
+      linear-gradient(rgba(111, 227, 242, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(111, 227, 242, 0.04) 1px, transparent 1px),
+      radial-gradient(120% 90% at 50% 0%, rgba(111, 227, 242, 0.07), transparent 60%);
+    background-size:
+      24px 24px,
+      24px 24px,
+      100% 100%;
+    box-shadow: var(--shadow-film);
+  }
+
+  .film ::selection {
+    background: color-mix(in oklab, var(--color-trace) 40%, transparent);
+    color: #fff;
+  }
+
+  .film :focus-visible {
+    outline-color: var(--color-trace);
+  }
+
+  .film-scanline {
+    pointer-events: none;
+    position: absolute;
+    inset-inline: 0;
+    top: 0;
+    height: 22%;
+    z-index: 0;
+    background: linear-gradient(
+      to bottom,
+      transparent,
+      rgba(111, 227, 242, 0.1) 70%,
+      rgba(111, 227, 242, 0.28)
+    );
+    animation: var(--animate-scan);
+  }
+
+  /* keyboard focus on a diagram node: light up its box */
+  .flow-node:focus-visible {
+    outline: none;
+  }
+  .flow-node:focus-visible > .flow-node-box {
+    stroke: var(--color-trace);
+    stroke-width: 2.4px;
+  }
+
+  /* ── inline code on paper ────────────────────────────────────────────── */
+  .ic {
+    font-family: var(--font-mono);
+    font-size: 0.86em;
+    padding: 0.08em 0.36em;
+    border-radius: 4px;
+    background: var(--color-paper-2);
+    border: 1px solid var(--color-rule);
+    white-space: nowrap;
+  }
+
+  .film .ic {
+    background: var(--color-film-3);
+    border-color: var(--color-film-rule);
+    color: var(--color-film-text);
+  }
+
+  /* ── syntax tokens ───────────────────────────────────────────────────── */
+  .code-film {
+    --tok-kw: #b7a0ff;
+    --tok-str: #9be7b4;
+    --tok-com: #647a90;
+    --tok-num: #ffc95c;
+    --tok-fn: #6fe3f2;
+    --tok-type: #ffa98f;
+    --tok-dec: #ffa98f;
+    --tok-op: #9db1c6;
+    --tok-plain: #dbe7f3;
+  }
+
+  .code-paper {
+    --tok-kw: #7650c0;
+    --tok-str: #17794f;
+    --tok-com: #8a8880;
+    --tok-num: #a35a05;
+    --tok-fn: #1c6bc4;
+    --tok-type: #b0442f;
+    --tok-dec: #b0442f;
+    --tok-op: #5c5b62;
+    --tok-plain: #1a1a1f;
+  }
+
+  .tok-kw {
+    color: var(--tok-kw);
+  }
+  .tok-str {
+    color: var(--tok-str);
+  }
+  .tok-com {
+    color: var(--tok-com);
+    font-style: italic;
+  }
+  .tok-num {
+    color: var(--tok-num);
+  }
+  .tok-fn {
+    color: var(--tok-fn);
+  }
+  .tok-type {
+    color: var(--tok-type);
+  }
+  .tok-dec {
+    color: var(--tok-dec);
+  }
+  .tok-op {
+    color: var(--tok-op);
+  }
+  .tok-plain {
+    color: var(--tok-plain);
+  }
+
+  /* ── scrubber range ──────────────────────────────────────────────────── */
+  .scrub {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 22px;
+    background: transparent;
+    cursor: pointer;
+    --scrub-track: var(--color-film-rule);
+    --scrub-fill: var(--color-trace);
+    --scrub-thumb: var(--color-trace);
+    --scrub-pct: 0%;
+  }
+  .scrub.scrub-paper {
+    --scrub-track: var(--color-rule-2);
+    --scrub-fill: var(--color-ink);
+    --scrub-thumb: var(--color-ink);
+  }
+  .scrub::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 999px;
+    background: linear-gradient(
+      to right,
+      var(--scrub-fill) 0 var(--scrub-pct),
+      var(--scrub-track) var(--scrub-pct) 100%
+    );
+  }
+  .scrub::-moz-range-track {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--scrub-track);
+  }
+  .scrub::-moz-range-progress {
+    height: 4px;
+    border-radius: 999px;
+    background: var(--scrub-fill);
+  }
+  .scrub::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    margin-top: -6px;
+    border-radius: 999px;
+    background: var(--scrub-thumb);
+    border: 3px solid var(--color-film);
+    box-shadow: 0 0 0 1px var(--scrub-thumb);
+    transition: transform 0.12s ease;
+  }
+  .scrub.scrub-paper::-webkit-slider-thumb {
+    border-color: var(--color-card);
+  }
+  .scrub::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 999px;
+    background: var(--scrub-thumb);
+    border: 3px solid var(--color-film);
+    box-shadow: 0 0 0 1px var(--scrub-thumb);
+  }
+  .scrub.scrub-paper::-moz-range-thumb {
+    border-color: var(--color-card);
+  }
+  .scrub:active::-webkit-slider-thumb {
+    transform: scale(1.18);
+  }
+  .scrub:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* ── thin scrollbars inside panels ───────────────────────────────────── */
+  .thin-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-rule-2) transparent;
+  }
+  .film .thin-scroll,
+  .thin-scroll.on-film {
+    scrollbar-color: var(--color-film-rule) transparent;
+  }
+
+  /* ── readable long-form blocks (takeaways, nudges) ───────────────────── */
+  .prose-lab {
+    max-width: 68ch;
+  }
+  .prose-lab p + p {
+    margin-top: 0.7em;
+  }
+  .prose-lab strong {
+    font-weight: 600;
+  }
+  .prose-lab em {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 1.04em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
