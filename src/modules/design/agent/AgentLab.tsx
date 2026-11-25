@@ -280,8 +280,9 @@ export default function AgentLab() {
                   <p>
                     “A person approves everything” fails on arithmetic: twelve thousand reviews a
                     month either costs more than the agent saves, or gets 45 seconds each. Set the
-                    cap so the queue stays readable, then watch override rate and review time, which
-                    the framework names as the signs of automation bias.
+                    cap so the queue stays readable, then watch override rate and review time. When
+                    both fall together, people have stopped reading what they approve. That is
+                    automation bias, which the framework flags as a risk to human oversight.
                   </p>
                 ),
               },

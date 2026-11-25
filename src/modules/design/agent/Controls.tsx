@@ -360,7 +360,7 @@ export function ControlField({
       }
     } else if (o.rubberStamping) {
       verdict = {
-        text: `The queue is ${o.load.toFixed(1)} times what this team can read properly. Reviews have shrunk to ${Math.round(o.reviewSeconds)} seconds and the override rate has fallen to ${pct(o.overrideRate, 1)}. Short reviews and few overrides are the signs of automation bias the framework says to watch.`,
+        text: `The queue is ${o.load.toFixed(1)} times what this team can read properly. Reviews have shrunk to ${Math.round(o.reviewSeconds)} seconds and the override rate has fallen to ${pct(o.overrideRate, 1)}. Short reviews and few overrides are what automation bias looks like in a queue, and the framework flags that bias as a risk to human oversight.`,
         bad: true,
       }
     } else {

@@ -918,7 +918,7 @@ def refund(
     sayIt:
       'I treat everything the model reads as untrusted and everything it emits as a request. So I want to see where that request is authorised in code: whose order, how much, and who approves above the cap.',
     seeAlso: {
-      text: "Singapore's IMDA agentic AI framework, which is voluntary guidance, recommends the same thing in governance language: bound the agent's risks upfront, and prefer deterministic limits to prompt instructions.",
+      text: "Singapore's IMDA agentic AI framework, which is voluntary guidance, puts the same idea in governance language. Two of its four dimensions are to assess and bound the risks upfront, and to implement technical controls and processes.",
       label: 'Design the governed version in the System Design Sandbox',
       path: '/design/agent',
     },
