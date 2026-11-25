@@ -3,6 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Explorable interview prep for Singapore's 2026 senior software engineering loops.",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "dev": "vite",

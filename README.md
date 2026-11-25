@@ -2,6 +2,8 @@
 
 Explorable interview prep for senior software engineering loops in Singapore, as they are run in late 2026.
 
+**Live: https://makoydev.github.io/sg-loop-lab/**
+
 Nothing in here is a flashcard. Every lab makes you attempt the problem first, and when you get stuck it lets you look inside the machine: step an algorithm, scrub a race condition, replay an incident against your own design.
 
 It runs entirely in the browser. No account, no backend, no API keys. Progress is kept in `localStorage` on your device.
@@ -25,6 +27,8 @@ npm run preview    # serve the production build
 ```
 
 The build is a plain static site with relative asset paths and hash routing, so `dist/` can be dropped on any static host or sub-path without configuration.
+
+Every push to `main` runs `npm run check` in GitHub Actions and, if it passes, publishes `dist/` to GitHub Pages. The workflow is `.github/workflows/ci.yml`.
 
 ## How every lab works
 
@@ -95,3 +99,7 @@ src/
 ```
 
 Each scenario keeps its behaviour in a pure `logic.ts` with a `logic.test.ts` beside it. The interface only renders what the logic computes, which is what makes the visualizers scrubbable and the claims in them testable. The race lab, for example, proves its "this cannot be broken" claims by exhaustively enumerating every interleaving.
+
+## Licence
+
+MIT, see [`LICENSE`](LICENSE). The bundled fonts (Fraunces, IBM Plex Sans, IBM Plex Mono) are under the SIL Open Font License 1.1.
