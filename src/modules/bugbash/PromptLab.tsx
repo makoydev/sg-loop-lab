@@ -43,7 +43,7 @@ export function PromptLab({ bug }: { bug: Bug }) {
   return (
     <Card className="overflow-hidden">
       <div className="flex flex-wrap items-start gap-x-4 gap-y-2 border-b border-rule px-5 py-4">
-        <div className="min-w-0 flex-1">
+        <div className="min-w-0 flex-1 basis-72">
           <Kicker>Prompt lab</Kicker>
           <h3 className="mt-1 text-[19px] leading-tight font-[560]">
             The bug is on the table. What do you ask the assistant for?

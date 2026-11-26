@@ -164,6 +164,16 @@
 }
 
 @layer base {
+  /*
+   * A grid with no column utility gets one column that may shrink below its
+   * content. The implicit `auto` column grows to the widest unbreakable line,
+   * which on a phone pushes a whole panel off screen. Any grid-cols-* utility
+   * still wins, because utilities come after the base layer.
+   */
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   html {
     -webkit-text-size-adjust: 100%;
     text-size-adjust: 100%;

@@ -90,8 +90,8 @@ function DimensionTable({ evaluation }: { evaluation: Evaluation }) {
     <div>
       <Kicker>The four dimensions, as engineering</Kicker>
       <div className="thin-scroll mt-3 overflow-x-auto">
-        <table className="w-full min-w-[640px] border-collapse text-left">
-          <thead>
+        <table className="w-full border-collapse text-left md:min-w-[640px]">
+          <thead className="max-md:sr-only">
             <tr className="border-b border-rule-2">
               <th className="kicker w-[34%] py-2 pr-4 text-ink-3">IMDA dimension</th>
               <th className="kicker py-2 pr-4 text-ink-3">What carries it in this sandbox</th>
@@ -103,8 +103,11 @@ function DimensionTable({ evaluation }: { evaluation: Evaluation }) {
               const reading = evaluation.coverage[dim.id]
               const covered = reading.score >= BOUNDS.coverage
               return (
-                <tr key={dim.id} className="border-b border-rule align-top">
-                  <td className="py-3 pr-4">
+                <tr
+                  key={dim.id}
+                  className="border-b border-rule align-top max-md:grid max-md:grid-cols-[minmax(0,1fr)_auto] max-md:gap-x-3"
+                >
+                  <td className="py-3 pr-4 max-md:pr-0">
                     <div className="flex gap-2.5">
                       <span className="num mt-0.5 flex size-5 shrink-0 items-center justify-center rounded bg-line text-[11.5px] font-semibold text-white">
                         {dim.n}
@@ -117,7 +120,7 @@ function DimensionTable({ evaluation }: { evaluation: Evaluation }) {
                       </div>
                     </div>
                   </td>
-                  <td className="py-3 pr-4">
+                  <td className="py-3 pr-4 max-md:col-span-2 max-md:row-start-2 max-md:pt-0 max-md:pl-7.5">
                     <ul className="flex flex-col gap-1.5">
                       {reading.items.map((item) => {
                         const full = item.points >= item.max
@@ -156,7 +159,7 @@ function DimensionTable({ evaluation }: { evaluation: Evaluation }) {
                       })}
                     </ul>
                   </td>
-                  <td className="py-3 text-right">
+                  <td className="py-3 text-right whitespace-nowrap max-md:col-start-2 max-md:row-start-1">
                     <span className={cn('num text-[20px] leading-none', covered ? 'text-ok' : 'text-bad')}>
                       {reading.score}
                     </span>
@@ -321,7 +324,7 @@ export default function AgentLab() {
             <div className="flex flex-col gap-6">
               <DimensionTable evaluation={evaluation} />
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl border border-rule bg-paper-2/60 px-4 py-3">
-                <p className="min-w-0 flex-1 text-[13.5px] leading-snug text-ink-2">
+                <p className="min-w-0 flex-1 basis-64 text-[13.5px] leading-snug text-ink-2">
                   {onReference
                     ? 'The reference design is loaded. Go back to the challenge and take one control away at a time to see which targets it was carrying.'
                     : 'Stuck, or curious? Load one design that meets every target, then go back and take controls away one at a time to see what each was carrying. There are other passing designs.'}
